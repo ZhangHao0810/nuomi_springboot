@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+
+<!--thymeleaf 基本语法 学习-->
+<head>
+    <meta charset="UTF-8">
+    <!--<title th:text="${title}">默认的Title</title>-->
+    <link rel="stylesheet" th:href="@{studay_app.css}">
+
+    <!--追加一个class-->
+    <style>
+        .active {
+            color: red;
+        }
+    </style>
+
+</head>
+
+<div>
+    <div class="app"></div>
+
+    <h2 th:text="${user.getUserName()}"></h2>
+    <h2 th:text="${user.userName}"></h2>  <!--可以用 get 也可以直接写属性名-->
+    <h2 th:text="${user.age}"></h2>
+
+    以下为循环的操作：
+    <!--循环-->
+    <div th:object="${user}">
+        <h2 th:text="*{userName}"></h2>
+        <h2 th:text="*{age}"></h2>
+    </div>
+
+    <!--th:if-->
+    <p th:if="${user.isVip}">会员</p>
+
+    <p th:text="${#dates.format(user.createTime,'yyyy-MM-dd HH:mm')}">时间</p>
+
+    <ul> <!--迭代数据,类似for each 循环-->
+        <li th:each="tag:${user.tags}" th:text="${tag}"></li>
+    </ul>
+
+    <ul><!--所有的都是red-->
+        <li th:each="tag:${user.tags}"
+            th:text="${tag}"
+            th:classappend="active"
+        ></li>
+    </ul>
+    <ul> <!--最后一个是red-->
+        <li th:each="tag,stat:${user.tags}"
+            th:text="${tag}"
+            th:classappend="${stat.last}?active"
+        ></li>
+    </ul>
+
+
+    <div th:switch="${user.sex}">
+        <p th:case="1">男</p>
+        <p th:case="2">女</p>
+        <p th:case="*">默认</p>
+    </div>
+
+    <!--加载 碎片，嵌入其他文件的代码-->
+    <div th:replace="~{studay_component::com1}"></div>
+    <!--insert，表示保留 外层的 div， 而 replace 会将 div也替换了 -->
+    <div th:insert="~{studay_component::com2}"></div>
+
+
+</div>
+
+<script th:inline="javascript">
+    <!--向JS中传递Java对象-->
+    const user = /*[[${user}]]*/{};
+    console.log(user)
+</script>
+
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+    <!--先设置为 移动设备优先-->
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+    <!--引入Bootstrap CSS-->
+    <link rel="stylesheet" href="../static/Bootstrap/css/bootstrap.css">
+
+</head>
+<body>
+
+<h1>HTML引用方法：</h1>
+
+<div>
+    <iframe name="content " width="80%" height="100%" src="../static/test/123.html"></iframe>
+
+
+    <h3>本地浏览md</h3>
+    <iframe src="../static/test/markdown.html?md=123.md" name="frame1" id="frame1" frameborder="0" width="100%"
+            onload="this.height=frame1.document.body.scrollHeight" scrolling="no"></iframe>
+
+
+    <h2>带有本地图片链接的形式：（博客整理）</h2>
+    <iframe src="../static/test/markdown.html?md=222.md" name="frame2" id="frame2" frameborder="0" width="100%"
+            onload="this.height=frame2.document.body.scrollHeight" scrolling="no"></iframe>
+
+
+    <script src="../static/Bootstrap/js/jquery-3.6.0.min.js"></script>
+    <script src="../static/Bootstrap/js/bootstrap.bundle.js"></script>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <!--先设置为 移动设备优先-->
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+    <!--引入Bootstrap CSS-->
+    <link rel="stylesheet" href="../static/Bootstrap/css/bootstrap.css">
+
+
+    <style>
+        body {
+            background-color: rgba(130, 140, 250, 0.2);
+            display: flex;
+            justify-content: center;
+        }
+
+        .shell {
+            max-width: 1200px;
+            column-count: 4;
+            column-gap: 10px;
+        }
+
+        .imge {
+            margin-bottom: 15px;
+        }
+
+        .imge img {
+            width: 100%;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div th:replace="common::header"></div>
+    <div class="row">
+        <!--<div class="col">-->
+        <!--全部目录-->
+        <!--</div>-->
+
+        <div class="col">
+            <h5>目录列表</h5>
+            <div th:text="${Path}"></div>
+
+            <!--<div class="list-group">-->
+            <!--<a -->
+            <!--class="list-group-item list-group-item-action" th:each="fileName:${File}"-->
+            <!--th:text="${fileName}">-->
+            <!--</a>-->
+            <!--</div>-->
+
+            <div class="list-group">
+                <div class="btn-group dropright " th:each="fileName:${File}">
+                    <a th:href="@{'/pageNext?filepath='+${Path}+'/'+${fileName}}">
+                        <button type="button" class="btn btn-light" th:text="${fileName}"></button>
+                    </a>
+
+                    <button type="button" class="btn btn-warning dropdown-toggle dropdown-toggle-split"
+                            id="dropdownMenuReference" data-toggle="dropdown" data-display="static" aria-haspopup="true"
+                            aria-expanded="false"
+                            data-reference="parent">
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
+                        <a class="dropdown-item" th:href="@{'/pageNext?path='+${Path}+'/'+${fileName}}">进入目录</a>
+                        <a class="dropdown-item"
+                           th:href="@{'/fileReName?path='+${Path}+'/'+${fileName}+'&newName=NewName'}">重命名</a>
+
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                            重命名
+                        </button>
+
+                        <a class="dropdown-item" th:href="@{'/fileDeletToBin?path='+${Path}+'/'+${fileName}}">放入回收站</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" th:href="@{'/fileDelet?path='+${Path}+'&fileName='+${fileName}}">彻底删除该目录</a>
+                    </div>
+                </div>
+            </div>
+
+            <!--用于重命名的模态框-->
+
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div>
+                <a th:href="@{'/folderDelet?path='+${Path}}">
+                    <button type="button" class="btn btn-danger">彻底删除此目录！</button>
+                </a>
+            </div>
+
+
+        </div>
+
+        <div class="col-10">
+
+            <div class="row">Mp4内容</div>
+            <div class="row border border-info rounded-lg" th:each="video:${Video}">
+                <!--MP4名称-->
+                <div><h6 th:text="${video}"></h6></div>
+                <br/>
+                <!--视频播放 -->
+                <video class="align-self-center border border-warning" controls
+                       width="70%">
+                    <source th:src="${Path}+'/'+${video}" type="video/mp4">
+                </video>
+
+                <div>
+                    <a th:href="@{'/fileDelet?path='+${Path}+'&fileName='+${video}}">
+                        <button type="button" class="btn btn-light">删除此视频</button>
+                    </a>
+                </div>
+
+            </div>
+            <div class="row border-dark"><h3>Gif内容</h3></div>
+            <div class="shell">
+                <div class="imge" th:each="gif:${Gif}">
+                    <img th:src="${Path}+'/'+${gif}">
+                    <a th:href="@{'/fileDelet?path='+${Path}+'&fileName='+${gif}}">
+                        <button type="button" class="btn btn-light">删除此GIF</button>
+                    </a>
+                </div>
+            </div>
+
+            <div class="row"><h3>Pic内容</h3></div>
+            <div class="shell ">
+                <div class="imge" th:each="pic:${Pic}">
+                    <img th:src="${Path}+'/'+${pic}">
+                    <a th:href="@{'/fileDelet?path='+${Path}+'&fileName='+${pic}}">
+                        <button type="button" class="btn btn-light">删除此IMG</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+<script src="../static/Bootstrap/js/jquery-3.6.0.min.js"></script>
+<script src="../static/Bootstrap/js/bootstrap.bundle.js"></script>
+</body>
+</html>
