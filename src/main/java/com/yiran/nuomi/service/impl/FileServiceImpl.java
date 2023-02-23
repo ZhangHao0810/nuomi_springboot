@@ -1,7 +1,7 @@
 package com.yiran.nuomi.service.impl;
 
 import com.yiran.nuomi.service.FileService;
-import com.yiran.nuomi.utils.FileUtils;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -26,6 +26,5 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public void fileReName(String filePath,String newName) throws IOException {
-        FileUtils.renameFile(filePath,newName);
     }
 }

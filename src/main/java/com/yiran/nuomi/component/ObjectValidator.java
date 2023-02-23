@@ -25,16 +25,13 @@ public class ObjectValidator implements ErrorCode {
         if (obj == null) {
             return null;
         }
-
         Map<String, String> result = new HashMap<>();
-
         Set<ConstraintViolation<Object>> set = validator.validate(obj);
         if (set != null && set.size() > 0) {
             for (ConstraintViolation cv : set) {
                 result.put(cv.getPropertyPath().toString(), cv.getMessage()); // map里存 有问题的属性和对应的消息
             }
         }
-
         return result;
     }
 

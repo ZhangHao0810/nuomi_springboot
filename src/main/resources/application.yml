@@ -3,12 +3,11 @@ server:
   servlet:
     session:
       timeout: 1h
-spring:
-  http:
     encoding:
       charset: utf-8
       enabled: true
       force: true
+spring:
   thymeleaf:
     cache: false
     prefix: classpath:/templates/

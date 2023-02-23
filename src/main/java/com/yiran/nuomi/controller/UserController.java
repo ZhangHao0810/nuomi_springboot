@@ -6,9 +6,8 @@ import com.yiran.nuomi.common.ResponseModel;
 import com.yiran.nuomi.common.Toolbox;
 import com.yiran.nuomi.entity.User;
 import com.yiran.nuomi.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,23 +24,23 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("user")
+@Slf4j
 public class UserController implements ErrorCode {
-
-    private Logger logger = LoggerFactory.getLogger(UserController.class);
-
+    
     @Autowired
     private UserService userService;
 
     @RequestMapping(path = "/register")
     public String register(User user, Model model) {
-        logger.info("用户{}已进入Register", user.getUsername());
+        
+        log.info("用户{}已进入Register", user.getUsername());
         // 加密处理
         user.setPassword(Toolbox.md5(user.getPassword()));
 
         userService.register(user);
         model.addAttribute("user", user);
 
-        logger.info("用户{}已注册", user.getUsername());
+        log.info("用户{}已注册", user.getUsername());
 
         return "index";
     }
@@ -57,7 +56,7 @@ public class UserController implements ErrorCode {
         User user = userService.login(username, md5pwd);
         session.setAttribute("loginUser", user);
         model.addAttribute("user", user);
-        logger.info("用户Session:{}", session.getAttribute("loginUser"));
+        log.info("用户Session:{}", session.getAttribute("loginUser"));
         return "index";
     }
 

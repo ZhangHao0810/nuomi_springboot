@@ -1,13 +1,14 @@
 package com.yiran.nuomi.controller;
 
+import cn.hutool.core.io.FileUtil;
 import com.yiran.nuomi.service.FileService;
-import com.yiran.nuomi.utils.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URLEncoder;
 
@@ -28,8 +29,7 @@ public class FileController {
 
     /**
      * 删除指定文件
-     *
-     * @param path
+     * @param path 文件的相对路径
      * @return
      */
     @RequestMapping("/delet")
@@ -39,7 +39,8 @@ public class FileController {
         System.out.println("文件夹 删除路径：" + filepath);
 
         if (!filepath.equals("G:/过程蓝图设计方法学/")) {
-            FileUtils.moveFileToRecycleBin(filepath,rootPath+"/回收站");
+            FileUtil.move(new File(filepath),new File(rootPath+"/回收站"),false);
+//            FileUtils.moveFileToRecycleBin(filepath,rootPath+"/回收站");
         } else {
             throw new Exception("不能删除根目录！！！");
         }
@@ -61,10 +62,10 @@ public class FileController {
 
         String filepath = rootPath + "/" + path;
         System.out.println("文件重命名：" + filepath);
+        FileUtil.rename(new File(filepath), newName, false);
+//        fileService.fileReName(filepath, newName);
 
-        fileService.fileReName(filepath, newName);
         String newpath = path.substring(0, path.lastIndexOf("/")) + "/" + newName;
-
         System.out.println("即将重定向到：" + newpath);
         return new RedirectView("pageNext?filepath=" + URLEncoder.encode(newpath, "UTF-8"));
 
