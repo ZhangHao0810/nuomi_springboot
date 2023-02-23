@@ -1,4 +1,4 @@
-package com.yiran.nuomi.controller;
+package com.yiran.nuomi.controller.learnning;
 
 import com.yiran.nuomi.dao.OrderMapper;
 import org.springframework.beans.factory.annotation.Autowired;

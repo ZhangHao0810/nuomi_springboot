@@ -1,4 +1,4 @@
-package com.yiran.nuomi.controller;
+package com.yiran.nuomi.controller.learnning;
 
 import com.yiran.nuomi.entity.User;
 import org.springframework.http.HttpMethod;

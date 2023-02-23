@@ -111,7 +111,7 @@
 
 
             <div>
-                <a th:href="@{'/folderDelet?path='+${Path}}">
+                <a th:href="@{'/file/delet?path='+${Path}}">
                     <button type="button" class="btn btn-danger">彻底删除此目录！</button>
                 </a>
             </div>
@@ -133,7 +133,7 @@
                 </video>
 
                 <div>
-                    <a th:href="@{'/fileDelet?path='+${Path}+'&fileName='+${video}}">
+                    <a th:href="@{'/file/delet?path='+${Path}+'&fileName='+${video}}">
                         <button type="button" class="btn btn-light">删除此视频</button>
                     </a>
                 </div>
@@ -143,7 +143,7 @@
             <div class="shell">
                 <div class="imge" th:each="gif:${Gif}">
                     <img th:src="${Path}+'/'+${gif}">
-                    <a th:href="@{'/fileDelet?path='+${Path}+'&fileName='+${gif}}">
+                    <a th:href="@{'/file/delet?path='+${Path}+'&fileName='+${gif}}">
                         <button type="button" class="btn btn-light">删除此GIF</button>
                     </a>
                 </div>
@@ -153,7 +153,7 @@
             <div class="shell ">
                 <div class="imge" th:each="pic:${Pic}">
                     <img th:src="${Path}+'/'+${pic}">
-                    <a th:href="@{'/fileDelet?path='+${Path}+'&fileName='+${pic}}">
+                    <a th:href="@{'/file/delet?path='+${Path}+'/'+${pic}}">
                         <button type="button" class="btn btn-light">删除此IMG</button>
                     </a>
                 </div>

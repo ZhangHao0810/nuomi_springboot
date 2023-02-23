@@ -10,13 +10,10 @@ public class Toolbox implements ErrorCode {
 
     private static final String salt = "糯米社区，你的专属私人空间";
 
-    public static String rootPath="G:/过程蓝图设计方法学";
-
     public static String md5(String str) {
         if (StringUtils.isEmpty(str)) {
             throw new BusinessException(PARAMETER_ERROR, "参数不合法！");
         }
-
         return DigestUtils.md5DigestAsHex((str + salt).getBytes());
     }
 

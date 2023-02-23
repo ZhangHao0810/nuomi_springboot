@@ -1,4 +1,4 @@
-package com.yiran.nuomi.controller;
+package com.yiran.nuomi.controller.learnning;
 
 import com.yiran.nuomi.entity.User;
 import com.yiran.nuomi.dao.UserMapper;
@@ -23,7 +23,7 @@ public class UserController_hello {
         return users;
     }
 
-    @PostMapping("/user/add")
+    @PostMapping("/user/add1")
     public String save(User user) {
         int insert = userMapper.insert(user);
         if (insert > 0) {

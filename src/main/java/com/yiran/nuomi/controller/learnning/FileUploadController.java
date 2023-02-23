@@ -1,4 +1,4 @@
-package com.yiran.nuomi.controller;
+package com.yiran.nuomi.controller.learnning;
 
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;

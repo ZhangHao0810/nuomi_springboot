@@ -1,4 +1,4 @@
-package com.yiran.nuomi.controller;
+package com.yiran.nuomi.controller.learnning;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -12,18 +12,19 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
+@RequestMapping("user")
 public class UserContoller {
 
     @Autowired
     UserMapper userMapper;
 
-    @GetMapping("/user/findAll")
+    @GetMapping("/findAll")
     public List<User> find(){
         return userMapper.selectAllUserAndOrders();
     }
 
 //  条件查询
-    @GetMapping("/user/find")
+    @GetMapping("/find")
     public List<User> findByCond(){
         QueryWrapper<User> queryWrapper = new QueryWrapper();
         queryWrapper.eq("username","zhangsan");
@@ -31,7 +32,7 @@ public class UserContoller {
     }
 
 //  分页查询
-    @GetMapping("/user/findByPage")
+    @GetMapping("/findByPage")
     public IPage findByPage(){
         //设置起始值及每页条数
         Page<User> page = new Page<>(0,2);
@@ -40,7 +41,7 @@ public class UserContoller {
     }
 
 //  插入数据
-    @PostMapping("/user")
+    @PostMapping("add")
     public String save(User user){
         int r= userMapper.insert(user);
         if(r > 0){

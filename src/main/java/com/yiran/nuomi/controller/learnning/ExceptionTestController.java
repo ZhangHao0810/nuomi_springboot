@@ -1,4 +1,4 @@
-package com.yiran.nuomi.controller;
+package com.yiran.nuomi.controller.learnning;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2021-09-17 21:31
  */
 @RestController
-public class ExceptionController {
+public class ExceptionTestController {
 
     @RequestMapping("/query")
     public void hello() {

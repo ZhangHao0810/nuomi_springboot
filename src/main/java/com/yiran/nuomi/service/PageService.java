@@ -1,12 +1,15 @@
 package com.yiran.nuomi.service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * @author Super-Zhang
  * @date 2021-09-26 14:59
  */
 public interface PageService {
+
+    Map<String,ArrayList<String>> getViewMap(String path) throws Exception;
 
     /**
      * 返回子文件夹

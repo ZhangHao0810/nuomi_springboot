@@ -16,12 +16,12 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public boolean fileDelet(String filePath) {
-        return FileUtils.moveFileToRecycleBin(new File(filePath));
+        return true;
     }
 
     @Override
     public boolean fileMove(String filePath) {
-        return FileUtils.moveFileToRecycleBin(new File(filePath));
+        return true;
     }
 
     @Override

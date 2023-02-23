@@ -1,4 +1,4 @@
-package com.yiran.nuomi.controller;
+package com.yiran.nuomi.controller.learnning;
 
 import com.yiran.nuomi.entity.UserVO;
 import org.springframework.stereotype.Controller;

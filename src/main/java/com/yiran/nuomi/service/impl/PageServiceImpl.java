@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Super-Zhang
@@ -16,6 +18,19 @@ import java.util.ArrayList;
 public class PageServiceImpl implements PageService {
 
     private Logger logger = LoggerFactory.getLogger(PageServiceImpl.class);
+
+    @Override
+    public Map<String, ArrayList<String>> getViewMap(String path) throws Exception {
+        HashMap<String, ArrayList<String>> map = new HashMap<>();
+        map.put("File", getFileNames(path));
+        map.put("Video", getMp4Names(path));
+        ArrayList<ArrayList<String>> picNames = getPicNames(path);
+        map.put("Gif", picNames.get(0));
+        map.put("Pic", picNames.get(1));
+        map.put("Txt", getTextNames(path));
+        
+        return map;
+    }
 
     /**
      * 获得所有子文件夹目录
@@ -32,7 +47,6 @@ public class PageServiceImpl implements PageService {
         }
 
         ArrayList<String> arrayList = new ArrayList<>();
-
         File[] fa = f.listFiles();
         for (File fs : fa) {
             if (fs.isDirectory()) {
@@ -55,7 +69,6 @@ public class PageServiceImpl implements PageService {
         }
 
         ArrayList<String> arrayList = new ArrayList<>();
-
         File[] fa = f.listFiles();
         for (File fs : fa) {
 

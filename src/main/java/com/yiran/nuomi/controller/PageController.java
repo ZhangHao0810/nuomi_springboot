@@ -3,6 +3,7 @@ package com.yiran.nuomi.controller;
 import com.yiran.nuomi.common.Toolbox;
 import com.yiran.nuomi.service.PageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,24 +15,18 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 public class PageController {
-
-    private String path = Toolbox.rootPath;
+    @Value("${root-path}")
+    private String path;
 
     @Autowired
     PageService pageService;
 
+
     @RequestMapping(path = "pageIndex")
     public String register(Model model) throws Exception {
-
-        String prefix = "";
-        model.addAttribute("Path", prefix);
-
-        model.addAttribute("File", pageService.getFileNames(path));
-        model.addAttribute("Video", pageService.getMp4Names(path));
-        model.addAttribute("Gif", pageService.getPicNames(path).get(0));
-        model.addAttribute("Pic", pageService.getPicNames(path).get(1));
-        model.addAttribute("Txt", pageService.getTextNames(path));
-
+        // web浏览，不应将 F:/xx 写入。应直接写相对路径。只有在操作文件的时候才用绝对路径。
+        model.addAttribute("Path", "");
+        model.addAllAttributes(pageService.getViewMap(path));
         return "page";
     }
 
@@ -45,16 +40,11 @@ public class PageController {
 //        ArrayList<String> list = new ArrayList<>(Arrays.asList(prefixs));
 //        model.addAttribute("Breadcrumb", list);
 
+        String fileRealPath = path + "/" + filepath;
+
         //获得资源传给前端
-        String filepathReal = path +"/"+ filepath;
-        System.out.println("pageNext filepathReal 文件访问路径"+filepathReal);
-
-        model.addAttribute("File", pageService.getFileNames(filepathReal));
-        model.addAttribute("Video", pageService.getMp4Names(filepathReal));
-        model.addAttribute("Gif", pageService.getPicNames(filepathReal).get(0));
-        model.addAttribute("Pic", pageService.getPicNames(filepathReal).get(1));
-//        model.addAttribute("Txt",pageService.getTextNames(filepathReal));
-
+        System.out.println("pageNext filepathReal 文件访问路径" + fileRealPath);
+        model.addAllAttributes(pageService.getViewMap(fileRealPath));
 
         return "page";
     }

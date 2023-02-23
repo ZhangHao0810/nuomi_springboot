@@ -1,5 +1,6 @@
 package com.yiran.nuomi.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.yiran.nuomi.common.BusinessException;
 import com.yiran.nuomi.common.ErrorCode;
 import com.yiran.nuomi.component.ObjectValidator;
@@ -23,7 +24,7 @@ import java.util.Map;
 @Service
 public class UserServiceImpl implements UserService, ErrorCode {
 
-    private Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Autowired
     private UserMapper userMapper;
@@ -31,14 +32,16 @@ public class UserServiceImpl implements UserService, ErrorCode {
     @Autowired
     private ObjectValidator validator;
 
+    private final QueryWrapper<User> queryWrapper = new QueryWrapper<User>();
+
     @Transactional
     public void register(User user) {
-
 
         if (user == null) {
             throw new BusinessException(PARAMETER_ERROR, "没填全哦~");
         }
 
+        // 先校验实体输入的正确与否，不正确直接抛异常。
         Map<String, String> result = validator.validate(user);
         if (result != null && result.size() > 0) {
             throw new BusinessException(PARAMETER_ERROR,
@@ -58,7 +61,8 @@ public class UserServiceImpl implements UserService, ErrorCode {
             throw new BusinessException(PARAMETER_ERROR, "空没填全哦");
         }
 
-        User user = userMapper.selectByUserName(username);
+        queryWrapper.eq("username",username);
+        User user = userMapper.selectOne(queryWrapper);
         if (user == null || !StringUtils.equals(password, user.getPassword())) {
             throw new BusinessException(USER_LOGIN_FAILURE, "昵称或密码错误！");
         }
