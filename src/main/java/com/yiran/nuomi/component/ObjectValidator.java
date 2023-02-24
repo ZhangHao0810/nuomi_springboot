@@ -1,6 +1,5 @@
 package com.yiran.nuomi.component;
 
-import com.yiran.nuomi.common.ErrorCode;
 import org.springframework.stereotype.Component;
 
 import javax.validation.ConstraintViolation;
@@ -17,7 +16,7 @@ import java.util.Set;
  * @date 2021-09-17 20:55
  */
 @Component
-public class ObjectValidator implements ErrorCode {
+public class ObjectValidator {
 
     private Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 

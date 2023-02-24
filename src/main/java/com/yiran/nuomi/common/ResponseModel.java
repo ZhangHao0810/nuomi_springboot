@@ -1,52 +1,51 @@
 package com.yiran.nuomi.common;
 
-public class ResponseModel {
+import cn.hutool.core.util.ObjectUtil;
 
-    // 状态常量
-    public static final int STATUS_SUCCESS = 0;
-    public static final int STATUS_FAILURE = 1;
+import java.util.HashMap;
 
-    // 业务状态
-    private int status;
-    // 业务数据
-    private Object data;
+public class ResponseModel extends HashMap<String, Object> implements StateCode {
+
+    // 根据前端快速配置 业务响应信息
+    private static final String STATE_TAG = "state";
+    private static final String MSG_TAG = "message";
+    private static final String DATA_TAG = "data";
 
     public ResponseModel() {
-        this.status = STATUS_SUCCESS;
     }
 
     public ResponseModel(Object data) {
-        this.status = STATUS_SUCCESS;
-        this.data = data;
+        super.put(STATE_TAG, Code.SUCCESS);
+        super.put(MSG_TAG, Code.SUCCESS);
+        if (!ObjectUtil.isEmpty(data)){
+            super.put(DATA_TAG, data);
+        }
     }
 
-    public ResponseModel(int status, Object data) {
-        this.status = status;
-        this.data = data;
+    public ResponseModel(Code code, Object data) {
+        super.put(STATE_TAG, code);
+        super.put(MSG_TAG, code);
+        if (!ObjectUtil.isEmpty(data)){
+            super.put(DATA_TAG, data);
+        }
     }
 
-    public int getStatus() {
-        return status;
+    /**
+     * @description 自定义返回内容
+     * @author zh
+     * @data 2023/2/24
+     */
+    public ResponseModel(int state, String message) {
+        super.put(STATE_TAG, state);
+        super.put(MSG_TAG, message);
     }
 
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public Object getData() {
-        return data;
-    }
-
-    public void setData(Object data) {
-        this.data = data;
-    }
-
-    @Override
-    public String toString() {
-        return "ResponseModel{" +
-                "status=" + status +
-                ", data=" + data +
-                '}';
+    public ResponseModel(int state, String message, Object data) {
+        super.put(STATE_TAG, state);
+        super.put(MSG_TAG, message);
+        if (!ObjectUtil.isEmpty(data)){
+            super.put(DATA_TAG, data);
+        }
     }
 
 }

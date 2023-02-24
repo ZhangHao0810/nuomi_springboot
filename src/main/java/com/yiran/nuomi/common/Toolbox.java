@@ -6,13 +6,13 @@ import org.springframework.util.DigestUtils;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Toolbox implements ErrorCode {
+public class Toolbox implements StateCode {
 
     private static final String salt = "糯米社区，你的专属私人空间";
 
     public static String md5(String str) {
         if (StringUtils.isEmpty(str)) {
-            throw new BusinessException(PARAMETER_ERROR, "参数不合法！");
+            throw new BusinessException(Code.ERROR.getCode(), "参数不合法！");
         }
         return DigestUtils.md5DigestAsHex((str + salt).getBytes());
     }

@@ -1,13 +1,14 @@
 package com.yiran.nuomi.controller;
 
 import com.yiran.nuomi.common.BusinessException;
-import com.yiran.nuomi.common.ErrorCode;
+import com.yiran.nuomi.common.StateCode;
 import com.yiran.nuomi.common.ResponseModel;
 import com.yiran.nuomi.common.Toolbox;
 import com.yiran.nuomi.entity.User;
 import com.yiran.nuomi.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,33 +26,29 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping("user")
 @Slf4j
-public class UserController implements ErrorCode {
-    
+public class UserController implements StateCode {
+
     @Autowired
     private UserService userService;
 
     @RequestMapping(path = "/register")
     public String register(User user, Model model) {
-        
-        log.info("用户{}已进入Register", user.getUsername());
+        if (Strings.isEmpty(user.getUsername())|| Strings.isEmpty(user.getPassword())){
+            throw new BusinessException(Code.ERROR, "没填全哦~");
+        }
         // 加密处理
         user.setPassword(Toolbox.md5(user.getPassword()));
-
         userService.register(user);
         model.addAttribute("user", user);
-
         log.info("用户{}已注册", user.getUsername());
-
-        return "index";
+        return "../static/login";
     }
 
     @RequestMapping(path = "/login")
     public String login(String username, String password, HttpSession session, Model model) {
-        if (StringUtils.isEmpty(username)
-                || StringUtils.isEmpty(password)) {
-            throw new BusinessException(PARAMETER_ERROR, "参数不合法！");
+        if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
+            throw new BusinessException(Code.ERROR, "参数不合法！");
         }
-
         String md5pwd = Toolbox.md5(password);
         User user = userService.login(username, md5pwd);
         session.setAttribute("loginUser", user);

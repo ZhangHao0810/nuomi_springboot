@@ -1,6 +1,6 @@
 package com.yiran.nuomi.controller.Interceptor;
 
-import com.yiran.nuomi.common.ErrorCode;
+import com.yiran.nuomi.common.StateCode;
 import com.yiran.nuomi.entity.User;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -25,7 +25,7 @@ import javax.servlet.http.HttpSession;
  * Servlet 的 Filter 是面向服务器的角度过滤的。 因为现在都是由 Dispatcher 分发了，就不用Filter了
  */
 @Component
-public class LoginCheckInterceptor implements HandlerInterceptor, ErrorCode {
+public class LoginCheckInterceptor implements HandlerInterceptor, StateCode {
 
     @Override
     public boolean preHandle(HttpServletRequest request, //handler 就相当于Controller

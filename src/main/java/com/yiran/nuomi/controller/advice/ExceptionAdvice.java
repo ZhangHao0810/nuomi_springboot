@@ -1,7 +1,7 @@
 package com.yiran.nuomi.controller.advice;
 
 import com.yiran.nuomi.common.BusinessException;
-import com.yiran.nuomi.common.ErrorCode;
+import com.yiran.nuomi.common.StateCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -16,7 +16,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
  * @date 2021-09-17 20:15
  */
 @ControllerAdvice
-public class ExceptionAdvice implements ErrorCode {
+public class ExceptionAdvice implements StateCode {
 
     private Logger logger = LoggerFactory.getLogger(ExceptionAdvice.class);
 
