@@ -1,4 +1,5 @@
 server:
+  #指定服务端口
   port: 8080
   servlet:
     session:
@@ -7,7 +8,36 @@ server:
       charset: utf-8
       enabled: true
       force: true
+      #指定统一访问前缀
+#    context-path: /nuomi
+
 spring:
+  # 配置数据库连接信息
+  datasource:
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/nuomidb?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+      username: root
+      password: '0206'
+      db-type: com.alibaba.druid.pool.DruidDataSource
+
+  #配置 redis 连接信息
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    password:
+    jedis:
+      pool:
+        #连接池最大连接数（使用负值表示没有限制） 默认 8
+        max-active: 8
+        #连接池最大阻塞等待时间（使用负值表示没有限制）默认 -1
+        max-wait: -1
+        #连接池中的最大空闲连接 默认 8
+        max-idle: 8
+        #连接池中的最小空闲连接 默认 0
+        min-idle: 0
+
   thymeleaf:
     cache: false
     prefix: classpath:/templates/
@@ -15,6 +45,18 @@ spring:
     encoding: UTF-8
     servlet:
       content-type: text/html
+
+  flyway:
+    #是否开启 flyway
+    enabled: false
+    baseline-on-migrate: false
+    #是否清除已有数据库下的表，生产环境必须关闭
+    clean-disabled: false
+    #数据库脚本位置
+    locations: classpath:db/migration
+    #执行记录表名
+    table: demo_flyway_schema_history
+
   devtools:
     restart:
       enabled: true
@@ -23,13 +65,6 @@ spring:
     static-path-pattern: /**
     pathmatch:
       matching-strategy: ant_path_matcher
-  datasource:
-    druid:
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/nuomidb?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
-      username: root
-      password: '0206'
-      db-type: com.alibaba.druid.pool.DruidDataSource
   servlet:
     multipart:
       max-file-size: 10MB
@@ -42,6 +77,8 @@ mybatis-plus:
   mapper-locations: classpath:mappers/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  # mybatis 别名扫描地址, mapper.xml中的resultType的全限定名可以省略。
+  type-aliases-package: com.yiran.nuomi.entity
 
 root-path: 'F:/nuomi-test'
 
