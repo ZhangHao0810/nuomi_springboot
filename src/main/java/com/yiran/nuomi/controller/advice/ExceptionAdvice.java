@@ -31,10 +31,10 @@ public class ExceptionAdvice implements StateCode {
             modelAndView.addObject("code", ((BusinessException) e).getCode());
             modelAndView.addObject("message", ((BusinessException) e).getMessage());
         } else if (e instanceof NoHandlerFoundException) { //NoHandlerFoundException 404 资源不存在
-            modelAndView.addObject("code", NOT_Found);
+            modelAndView.addObject("code", Code.NOT_FOUND);
             modelAndView.addObject("message", "该资源不存在！");
         } else {
-            modelAndView.addObject("code", UNDEFINED_ERROR);
+            modelAndView.addObject("code", Code.UNAUTHORIZED);
             modelAndView.addObject("message", "发生未知错误:" + e.getMessage());
             // 记录日志
             logger.error("发生未知错误", e);

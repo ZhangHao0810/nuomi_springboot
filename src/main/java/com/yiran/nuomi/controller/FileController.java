@@ -70,4 +70,19 @@ public class FileController {
         return new RedirectView("pageNext?filepath=" + URLEncoder.encode(newpath, "UTF-8"));
 
     }
+
+    /**
+     * 文件或文件夹的重命名
+     *
+     * @param path
+     * @return
+     */
+    @RequestMapping("/move")
+    public RedirectView fileMove( String path, String newPath) throws IOException {
+
+        String filepath = rootPath + "/" + path;
+        FileUtil.move(new File(filepath),new File(newPath),false);
+        return new RedirectView("pageNext?filepath=" + URLEncoder.encode(newpath, "UTF-8"));
+
+    }
 }
